@@ -1,3 +1,4 @@
+import gsap from 'gsap'
 import { trapFocus, visibleLinks } from './helpers/trapFocus'
 import bodyScrollLock from './helpers/bodyScrollLock'
 
@@ -7,27 +8,26 @@ const menuWrapper = header.querySelector('[data-menu-wrapper]')
 const homeLink = header.querySelector('[data-home-link]')
 
 const open = () => {
-  const firstMenuLink = visibleLinks(menuWrapper)[0]
-
   menuWrapper.hidden = false
   menuBtn.setAttribute('aria-expanded', true)
-  menuBtn.innerText = 'Close'
-  firstMenuLink.focus()
-  bodyScrollLock(true)
+  menuBtn.setAttribute('aria-label', 'Close')
+  // bodyScrollLock(true)
 
   setTimeout(() => {
     menuWrapper.classList.add('is-visible')
-  }, 10)
+    document.body.classList.add('is-menu-visible')
+  }, 50)
 }
 
 const close = () => {
   menuWrapper.classList.remove('is-visible')
+  document.body.classList.remove('is-menu-visible')
 
   setTimeout(() => {
     menuWrapper.hidden = true
     menuBtn.setAttribute('aria-expanded', false)
-    menuBtn.innerText = 'Menu'
-    bodyScrollLock(false)
+    menuBtn.setAttribute('aria-label', 'Menu')
+    // bodyScrollLock(false)
   }, 250)
 }
 
@@ -48,6 +48,16 @@ const trapFocusInMenu = (e) => {
   }
 }
 
+const handleClick = (e) => {
+  const id = e.target.getAttribute('href')
+
+  if (id) {
+    const section = document.querySelector(id)
+    close()
+    section.parentElement.classList.add('is-inview')
+  }
+}
+
 const menu = () => {
   menuBtn.hidden = false
   menuWrapper.hidden = true
@@ -55,6 +65,7 @@ const menu = () => {
   menuWrapper.classList.add('js-menu')
   menuBtn.addEventListener('click', toggleMenu)
   menuWrapper.addEventListener('keydown', trapFocusInMenu)
+  menuWrapper.addEventListener('click', handleClick)
 }
 
 export default menu

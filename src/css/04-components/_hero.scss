@@ -1,42 +1,61 @@
 .c-hero {
-  min-height: 100vh;
-  text-align: center;
-  background: repeating-radial-gradient(
-      circle at 50%,
-      transparent 2rem,
-      $alt 2rem,
-      $alt 2.2rem,
-      transparent 2.2rem,
-      transparent 4rem
-    ),
-    radial-gradient(circle at 50%, $alt, transparent), $bgDark;
-  background-size: 10rem 10rem, 100% 100%;
-  background-repeat: repeat;
-  background-position: center;
-  color: $white;
+  @media (min-width: $lg) {
+    position: fixed;
+    width: 100%;
+  }
+}
+
+.c-hero__content {
+  position: relative;
+}
+
+.c-hero__wrapper {
+  background: var(--bg);
+  color: var(--accent);
   padding: 4rem 0 5rem;
   display: flex;
   align-items: center;
+  min-height: 100vh;
 
   @media (min-width: $md) {
     padding: 10rem 0;
+    font-size: 1.6rem;
   }
 }
 
 .c-hero__heading {
-  color: $accent;
+  color: var(--accent);
+  filter: drop-shadow(0 0 0.35rem var(--accent));
+
+  .char {
+    opacity: 0;
+    transform: translate3d(0, 0.5em, 0);
+    display: inline-block;
+  }
+
+  @supports (-webkit-text-stroke-width: 1px) {
+    color: var(--bg);
+    color: transparent;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: var(--accent);
+  }
 
   @media (min-width: $lg) {
     font-size: 6rem;
   }
 }
 
-.c-hero__desc {
-  max-width: 50ch;
-  margin: 0 auto;
+.c-hero__wrapper--main {
+  .c-hero__desc {
+    opacity: 0;
+    transform: translate3d(0, 1rem, 0);
 
-  @media (min-width: $md) {
-    font-size: 1.4rem;
+    &.is-visible {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      transition: opacity 700ms cubic-bezier(0.24, 0.02, 0.32, 1),
+        transform 700ms cubic-bezier(0.24, 0.02, 0.32, 1);
+    }
   }
 }
 
@@ -54,30 +73,86 @@
   }
 }
 
-.c-hero__link {
-  color: $accent;
-  margin-top: var(--vr);
-
-  &:hover,
-  &:focus {
-    color: $lightGrey;
+.is-complete {
+  .c-hero__heading {
+    .char {
+      --delay: calc(var(--char-index) * 150ms);
+      animation: appear 800ms var(--delay, 0ms) forwards,
+        slide 900ms var(--delay, 0ms) forwards;
+    }
   }
 }
 
-.c-hero__link--github {
-  display: inline-flex;
-  align-items: center;
-  font-size: 80%;
-  color: $lightGrey;
+@keyframes appear {
+  100% {
+    opacity: 1;
+  }
+}
 
-  &:hover,
-  &:focus {
-    color: $white;
+@keyframes slide {
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.c-hero__wrapper--cover {
+  --circleX: var(--cursorX, 50%);
+  --circleY: var(--cursorY, 50%);
+  --grad: circle at var(--circleX, 50%) var(--circleY, 50%),
+    black var(--maskSize, 0%), transparent 0, transparent var(--maskSize2, 0%),
+    black var(--maskSize2, 0%), black var(--maskSize3, 0%), transparent 0;
+
+  @media (prefers-reduced-motion: reduce) {
+    --circleX: 50%;
+    --circleY: 50%;
   }
 
-  svg {
-    width: 1.5rem;
-    height: 1.5rem;
-    margin-left: 0.5rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  pointer-events: none;
+  background: linear-gradient(45deg, turquoise, darkorchid, deeppink, orange),
+    var(--text);
+  color: var(--text);
+  -webkit-mask-image: radial-gradient(var(--grad));
+  mask-image: radial-gradient(var(--grad));
+
+  .c-hero__desc {
+    opacity: 1;
+  }
+
+  .c-hero__heading {
+    color: var(--text);
+    filter: none;
+
+    @supports (-webkit-text-stroke-width: 1px) {
+      -webkit-text-stroke-width: 0;
+    }
+
+    @media (min-width: $md) {
+      background: radial-gradient(
+        circle at center,
+        var(--text) 0.11rem,
+        transparent 0
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      background-size: 0.4rem 0.4rem;
+      color: transparent;
+    }
+  }
+}
+
+.no-js {
+  .char {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .c-hero__desc {
+    opacity: 1;
+    transition: none;
   }
 }

@@ -1,8 +1,32 @@
+@font-face {
+  font-family: 'Montserrat Black';
+  src: url('../fonts/montserrat-black-webfont.woff2') format('woff2'),
+    url('../fonts/montserrat-black-webfont.woff') format('woff');
+  font-display: swap;
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('../fonts/lato-regular-webfont.woff2') format('woff2'),
+    url('../fonts/lato-regular-webfont.woff') format('woff');
+  font-display: swap;
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   font-family: 'Lato', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
   @media (min-width: $md) {
     font-size: 1.2rem;
+  }
+
+  @media (min-width: $lg) {
+    font-size: 1.4rem;
   }
 }
 
@@ -10,24 +34,19 @@ h1,
 h2,
 h3,
 h4 {
+  font-family: 'Montserrat Black', sans-serif;
+  font-weight: normal;
   line-height: 1.1;
-  font-family: 'Amiri', serif;
-  font-weight: 700;
   margin: 0;
 }
 
-h2,
-h3 {
-  letter-spacing: -0.02em;
-}
-
-h1 {
+h1,
+.heading-1 {
+  font-family: 'Montserrat Black', sans-serif;
+  font-size: clamp(2rem, 10vw, 5rem);
   line-height: 1.1;
-  letter-spacing: -0.03em;
-
-  @media (min-width: $md) {
-    font-size: 4.5rem;
-  }
+  letter-spacing: 0.01em;
+  margin: 0;
 }
 
 h2 {
@@ -39,23 +58,31 @@ h2 {
 }
 
 h3 {
-  font-family: 'Lato', sans-serif;
   font-size: 1.1rem;
 
   @media (min-width: $md) {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
 }
 
 p {
-  line-height: 1.5;
+  line-height: 1.6;
+  max-width: 65ch;
 }
 
 a {
-  color: lighten($bgDark, 20%);
+  color: inherit;
+}
 
-  &:hover,
-  &:focus {
-    color: $bgDark;
+figcaption {
+  font-size: 1rem;
+  margin-top: 1rem;
+
+  @media (min-width: $md) {
+    font-size: 1.2rem;
   }
+}
+
+li::marker {
+  color: var(--accent);
 }

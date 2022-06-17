@@ -8,7 +8,11 @@
       <a href="/">{{ metadata.title }}</a>
     </h3>
   {% endif %}
-  <button class="c-header__menu-btn" hidden="true" data-btn="menu" aria-haspopup="true">Menu</button>
+  <button class="c-header__menu-btn" hidden="true" data-btn="menu" aria-label="menu" aria-haspopup="true">
+    <span class="c-header__menu-icon">
+      <span></span>
+    </span>
+  </button>
   <div data-menu-wrapper="data-menu-wrapper">
     <nav class="c-header__nav">
       <ul class="c-header__list">
@@ -16,13 +20,13 @@
           <a class="c-header__link" href="/" hidden="true" data-home-link="data-home-link">Home</a>
         </li>
 
-        {% for page in collections.page %}
+        {% for post in collections.sortedSections %}
           <li class="c-header__item">
-            <a class="c-header__link" href="{{ page.url }}">{{ page.data.pageTitle }}</a>
+            <a class="c-header__link" href="#{{ post.fileSlug }}" data-menu-link>{{ post.data.pageTitle }}</a>
           </li>
         {% endfor %}
 
-        {% for item in menudata %}
+        {# {% for item in menudata %}
           <li class="c-header__item">
             <a class="c-header__link" href="{{ item.url }}">
               {{ item.title }}
@@ -31,7 +35,7 @@
               </svg>
             </a>
           </li>
-        {% endfor %}
+        {% endfor %} #}
 
       </ul>
     </nav>

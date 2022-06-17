@@ -16,10 +16,36 @@ ul {
 img {
   max-width: 100%;
   display: block;
+  height: auto;
 }
 
 svg {
   width: 100%;
   height: 100%;
   fill: currentColor;
+}
+
+figure {
+  margin: 0;
+}
+
+ul:not([class]) {
+  margin: 0;
+  padding-left: var(--vr);
+}
+
+*:focus,
+button:focus {
+  outline: none;
+}
+
+*:focus-visible,
+button:focus-visible {
+  outline: 2px dashed var(--accent);
+}
+
+.js-focus-visible {
+  *:focus:not(.focus-visible) {
+    outline: none;
+  }
 }

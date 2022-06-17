@@ -1,13 +1,13 @@
 /* Breakpoints */
 
-$md: 45em;
-$lg: 70em;
+$md: 650px;
+$lg: 1024px;
 
 /* Colors */
 $white: #f7f7f7;
 $lightGrey: #cdced1;
 
-$bgDark: #112338;
+$bgDark: rgba(9, 14, 23, 1);
 $accent: #77eddf;
 $alt: darken($bgDark, 5%);
 
@@ -15,6 +15,10 @@ $alt: darken($bgDark, 5%);
 
 :root {
   --vr: 1rem;
+  --2vr: calc(var(--vr) * 2);
+  --text: #f7f7f7;
+  --bg: rgba(9, 14, 23, 1);
+  --accent: turquoise;
 
   @media (min-width: $md) {
     --vr: 2rem;

@@ -1,0 +1,14 @@
+<ul class="c-projects">
+  {% for project in projectsData %}
+    <li class="c-projects__item">
+      <figure class="c-projects__fig">
+        <div class="c-projects__img-wrapper-outer">
+          <div class="c-projects__img-wrapper">
+            <img src="{{ project.image.src }}" alt="{{ project.image.alt }}" width="800" height="600">
+          </div>
+        </div>
+        <figcaption class="c-projects__caption"><a href="{{ project.url }}">{{ project.title }}</a></figcaption>
+      </figure>
+    </li>
+  {% endfor %}
+</ul>

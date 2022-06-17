@@ -1,26 +1,44 @@
 {% extends "./layout.njk" %}
 
 {% block content %}
-  <div class="c-hero">
-    <div class="container">
-      <h1 class="c-hero__heading">{{ pageTitle }}</h1>
-      <div class="c-hero__desc">
-        <p>{{ metadata.description }}</p>
-        <div class="c-hero__link-wrapper">
-          <a class="c-hero__link c-hero__link--about" href="/about">About this project</a>
+  <div class="c-hero" data-hero>
+    <div class="c-hero__content">
+      <div class="c-hero__wrapper c-hero__wrapper--main">
+        <div class="container">
+          <h1 class="c-hero__heading" data-heading>{{ pageTitle }}</h1>
+          <p class="c-hero__desc" data-subtitle>{{ subtitle }}</p>
         </div>
-        <div class="c-hero__link-wrapper">
-          <a class="c-hero__link c-hero__link--github" href="{{ metadata.githubUrl }}">
-            Fork this on Github
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30">
-              <use href="#github"/>
-            </svg>
-          </a>
+      </div>
+      <div class="c-hero__wrapper c-hero__wrapper--cover" aria-hidden="true">
+        <div class="container">
+          <p class="c-hero__heading heading-1">{{ pageTitle }}</p>
+          <p class="c-hero__desc">{{ subtitle }}</p>
         </div>
       </div>
     </div>
   </div>
 
-  {{ content | safe }}
-
+  <div class="page-content" data-page-content>
+    {% for post in collections.sortedSections %}
+      {% if post.fileSlug == 'about' %}
+        {% include "./partials/section-about.njk" %}
+      {% elseif post.fileSlug == 'contact' %}
+        {% include "./partials/section-contact.njk" %}
+      {% else %}
+        <section class="section section--{{ post.fileSlug }}" data-section="{{ post.fileSlug }}" id="{{ post.fileSlug }}">
+          <div class="c-section__content" data-section-content>
+            <div class="container">
+              <h2 class="c-section__heading" data-heading="{{ loop.index }}">
+                {{ post.data.pageTitle }}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 781.4 40.9"><path fill="none" stroke-miterlimit="10" stroke-width="5" pathLength="1" d="M.7 1.4l37.2 38L75 1.4l37.1 38 37.2-38 37.1 38 37.2-38 37.1 38 37.1-38 37.2 38 37.1-38 37.2 38 37.1-38 37.1 38 37.2-38 37.1 38 37.2-38 37.1 38 37.2-38 37.1 38 37.2-38 37.1 38"/></svg>
+              </h2>
+              <div class="c-section__inner-content o-richtext" data-content>
+                {{ post.data.content | safe }}
+              </div>
+            </div>
+          </div>
+        </section>
+      {% endif %}
+    {% endfor %}
+  </div>
 {% endblock %}
